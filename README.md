@@ -52,8 +52,8 @@ job without waiting, and orders leave the warehouse on time.
 
 1. Open Telegram and search for **@BotFather**
 2. Send `/newbot`
-3. Choose a display name (e.g. `DC5 QC Alerts | Priorities`)
-4. Choose a username ending in `bot` (e.g. `dc5_qc_priorities_bot`)
+3. Choose a display name (e.g. `Warehouse QC Alerts`)
+4. Choose a username ending in `bot` (e.g. `warehouse_qc_alerts_bot`)
 5. BotFather will reply with a **token** — save it for later
 
 ### 2. Get your Chat ID
