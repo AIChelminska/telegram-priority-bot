@@ -11,7 +11,7 @@ on their laptops to spot new priorities — a process that created delays,
 especially during peak hours when up to 6 blocked pallets could appear 
 simultaneously.
 
-With ~10 people working on the same document, there was no clear way 
+With ~6 people working on the same document, there was no clear way 
 to coordinate who was handling which pallet, leading to duplicated 
 efforts or missed priorities altogether. Every minute of delay meant 
 slower order fulfillment and late deliveries.
