@@ -1,0 +1,21 @@
+{
+  "name": "telegram-priority-bot",
+  "version": "2.0.0",
+  "description": "A Telegram bot powered by Google Apps Script that monitors a Google Sheets document and sends real-time notifications when new blocked pallets appear — built for warehouse quality control workflows.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achelminska/telegram-priority-bot.git"
+  },
+  "keywords": [],
+  "author": "achelminska",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/achelminska/telegram-priority-bot/issues"
+  },
+  "homepage": "https://github.com/achelminska/telegram-priority-bot#readme"
+}
