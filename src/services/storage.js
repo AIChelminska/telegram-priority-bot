@@ -18,6 +18,8 @@ const getPalletState = (palletKey) => palletStates.get(palletKey);
 
 const setPalletState = (palletKey, state, claimer = null) => palletStates.set(palletKey, { state, claimer });
 
+const getPalletByKey = (palletKey) => knownPallets.find(pallet => pallet.key === palletKey);
+
 const getPG = () => pg;
 
 const setPG = (user) => pg = user;
@@ -29,6 +31,7 @@ module.exports = {
   saveMessageId,
   getPalletState,
   setPalletState,
+  getPalletByKey,
   getPG,
   setPG
 };
