@@ -31,6 +31,24 @@ const processData = (rows) => {
     };
 }
 
+const createRouter = (onData) => {
+    const router = express.Router();
+
+    router.post('/', (req, res) => {
+        const rows = req.body.rows;
+        const { newPallets, resolvedPallets } = processData(rows);
+        onData(newPallets, resolvedPallets);
+        res.json({
+            received: rows.length,
+            new: newPallets.length,
+            resolved: resolvedPallets.length
+        });
+    });
+
+    return router;
+}
+
 module.exports = {
-    processData
+    processData,
+    createRouter
 };
