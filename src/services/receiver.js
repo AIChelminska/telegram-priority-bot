@@ -37,7 +37,9 @@ const createRouter = (onData) => {
     router.post('/', (req, res) => {
         const rows = req.body.rows;
         const { newPallets, resolvedPallets } = processData(rows);
-        onData(newPallets, resolvedPallets);
+
+        onData({ newPallets, resolvedPallets })
+
         res.json({
             received: rows.length,
             new: newPallets.length,
