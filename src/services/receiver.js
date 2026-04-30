@@ -35,6 +35,10 @@ const createRouter = (onData) => {
     const router = express.Router();
 
     router.post('/', (req, res) => {
+        const secret = process.env.RECEIVER_SECRET;
+if (secret && req.headers['x-secret'] !== secret) {
+    return res.status(401).json({ error: 'Unauthorized' });
+}
         const rows = req.body.rows;
         const { newPallets, resolvedPallets } = processData(rows);
 
