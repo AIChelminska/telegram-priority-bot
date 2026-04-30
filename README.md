@@ -12,7 +12,11 @@
 
 ## How it works
 
-When a pallet is blocked in the warehouse system, the bot instantly notifies the QC team on Telegram. Each notification shows the pallet details and interactive buttons — no more manually checking spreadsheets.
+1. Google Apps Script (running on Picnic Google Workspace) reads the spreadsheet every minute
+2. Apps Script pushes the data to the Node.js server via HTTP POST
+3. Node.js server compares incoming data with known state
+4. Detects new or resolved pallets and sends Telegram notifications
+5. Team interacts with inline buttons — bot updates messages in real time via webhook
 
 ## Pallet states
 
@@ -43,9 +47,9 @@ When a pallet is blocked in the warehouse system, the bot instantly notifies the
 
 - Node.js
 - Express
+- Google Apps Script (data source — runs on Picnic Workspace)
 - Telegram Bot API
-- Google Sheets API
-- node-cron
+- node-cron (dashboard updates)
 - Jest (unit tests)
 - GitHub Actions (CI)
 - Render.com (hosting)
