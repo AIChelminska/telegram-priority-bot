@@ -3,7 +3,7 @@ const { editPalletMessage } = require('../services/telegram');
 
 const handleClaim = async (callbackQuery) => {
     const claimer = callbackQuery.from.username;
-    const palletKey = callbackQuery.data.split('_')[1];
+    const palletKey = callbackQuery.data.replace('claim_', '');
     storage.setPalletState(palletKey, 'claimed', claimer);
     const pallet = storage.getPalletByKey(palletKey);
     await editPalletMessage(palletKey, `✋ ${pallet.articleName} claimed by ${claimer}`, 
