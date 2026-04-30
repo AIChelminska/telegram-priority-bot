@@ -48,9 +48,14 @@ const editPalletMessage = async (palletKey, text, buttons) => {
     });
 }
 
+const sendAlert = async (callbackQuery, text) => {
+    await bot.answerCallbackQuery(callbackQuery.id, text);
+}
+
 
 module.exports = {
     sendNewPalletNotification,
     sendPalletUnblockedNotification,
-    editPalletMessage
+    editPalletMessage,
+    sendAlert
 }
