@@ -37,7 +37,20 @@ const sendPalletUnblockedNotification = async (pallet) => {
     );
 }
 
+const editPalletMessage = async (palletKey, text, buttons) => {
+    const messageId = storage.getMessageId(palletKey);
+    if (!messageId) return;
+
+    await bot.editMessageText(text, {
+        chat_id: groupId,
+        message_id: messageId,
+        reply_markup: { inline_keyboard: buttons }
+    });
+}
+
+
 module.exports = {
     sendNewPalletNotification,
-    sendPalletUnblockedNotification
+    sendPalletUnblockedNotification,
+    editPalletMessage
 }
