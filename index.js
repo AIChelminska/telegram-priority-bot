@@ -7,6 +7,10 @@ const claimHandler = require('./src/handlers/claim');
 const resignHandler = require('./src/handlers/resign');
 const stackedHandler = require('./src/handlers/stacked');
 const unstackedHandler = require('./src/handlers/unstacked');
+const assignHandler = require('./src/handlers/assign');
+const acceptHandler = require('./src/handlers/accept');
+const rejectHandler = require('./src/handlers/reject');
+const becomePgHandler = require('./src/handlers/become-pg');
 
 const app = express();
 
@@ -29,7 +33,11 @@ app.post('/webhook', (req, res) => {
     else if (data.startsWith('resign_')) resignHandler.handleResign(callback_query);
     else if (data.startsWith('stack_')) stackedHandler.handleStacked(callback_query);
     else if (data.startsWith('unstack_')) unstackedHandler.handleUnstacked(callback_query);
-
+    else if (data.startsWith('assign_user_')) assignHandler.handleAssignUser(callback_query);
+    else if (data.startsWith('assign_')) assignHandler.handleAssign(callback_query);
+    else if (data.startsWith('accept_')) acceptHandler.handleAccept(callback_query);
+    else if (data.startsWith('reject_')) rejectHandler.handleReject(callback_query);
+    else if (data.startsWith('become_pg')) becomePgHandler.handleBecomePG(callback_query);
     res.sendStatus(200);
 });
 
