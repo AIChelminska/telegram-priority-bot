@@ -11,6 +11,7 @@ const assignHandler = require('./src/handlers/assign');
 const acceptHandler = require('./src/handlers/accept');
 const rejectHandler = require('./src/handlers/reject');
 const becomePgHandler = require('./src/handlers/become-pg');
+const scheduler = require('./src/scheduler');
 
 const app = express();
 
