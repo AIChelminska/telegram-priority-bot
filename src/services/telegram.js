@@ -62,11 +62,16 @@ const sendDashboardMessage = async (text) => {
 }
 
 const editDashboardMessage = async (messageId, text) => {
-    await bot.editMessageText(text, {
-        chat_id: groupId,
-        message_id: messageId,
-        reply_markup: { inline_keyboard: [] }
-    });
+    if (!messageId) return;
+    try {
+        await bot.editMessageText(text, {
+            chat_id: groupId,
+            message_id: messageId,
+            reply_markup: { inline_keyboard: [] }
+        });
+    } catch (err) {
+        console.error('[telegram] editDashboardMessage error:', err.message);
+    }
 }
 
 module.exports = {
