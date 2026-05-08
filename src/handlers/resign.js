@@ -2,6 +2,7 @@ const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleResign = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('resign_', '');
     const user = callbackQuery.from.username || callbackQuery.from.first_name;
     const palletState = storage.getPalletState(palletKey);

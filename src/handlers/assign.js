@@ -2,6 +2,7 @@ const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleAssign = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('assign_', '');
     const pg = storage.getPG();
     if (!pg || (pg.username || pg.first_name) !== (callbackQuery.from.username || callbackQuery.from.first_name)) {
@@ -19,6 +20,7 @@ const handleAssign = async (callbackQuery) => {
 }
 
 const handleAssignUser = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const rest = callbackQuery.data.replace('assign_user_', '');
     const separatorIndex = rest.indexOf('_');
     const member = rest.slice(0, separatorIndex);

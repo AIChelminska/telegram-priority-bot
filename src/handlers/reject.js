@@ -1,7 +1,8 @@
 const storage = require('../services/storage');
-const { editPalletMessage } = require('../services/telegram');
+const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleReject = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const reject = callbackQuery.data.replace('reject_', '');
     const separatorIndex = reject.indexOf('_');
     const member = reject.slice(0, separatorIndex);

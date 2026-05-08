@@ -1,7 +1,8 @@
 const storage = require('../services/storage');
-const { editPalletMessage } = require('../services/telegram');
+const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleUnstacked = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('unstack_', '');
     storage.setPalletState(palletKey, 'unclaimed');
     const pallet = storage.getPalletByKey(palletKey);

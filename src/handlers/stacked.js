@@ -1,7 +1,8 @@
 const storage = require('../services/storage');
-const { editPalletMessage } = require('../services/telegram');
+const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleStacked = async (callbackQuery) => {
+    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('stack_', '');
     storage.setPalletState(palletKey, 'stacked');
     const pallet = storage.getPalletByKey(palletKey);
