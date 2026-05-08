@@ -12,6 +12,7 @@ const acceptHandler = require('./src/handlers/accept');
 const rejectHandler = require('./src/handlers/reject');
 const becomePgHandler = require('./src/handlers/become-pg');
 const scheduler = require('./src/scheduler');
+const dashboard = require('./src/handlers/dashboard');
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.post('/webhook', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    dashboard.initDashboard();
 });
 
 

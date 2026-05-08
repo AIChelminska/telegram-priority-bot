@@ -4,6 +4,8 @@ let messageIds = new Map();
 
 let palletStates = new Map();
 
+let unblockedToday = 0;
+
 let pg = null;
 
 const getKnownPallets = () => knownPallets;
@@ -24,6 +26,12 @@ const getPG = () => pg;
 
 const setPG = (user) => pg = user;
 
+const getUnblockedToday = () => unblockedToday;
+
+const incrementUnblockedToday = () => unblockedToday++;
+
+const resetUnblockedToday = () => unblockedToday = 0;
+
 module.exports = {
   getKnownPallets,
   setKnownPallets,
@@ -33,5 +41,8 @@ module.exports = {
   setPalletState,
   getPalletByKey,
   getPG,
-  setPG
+  setPG,
+  getUnblockedToday,
+  incrementUnblockedToday,
+  resetUnblockedToday
 };

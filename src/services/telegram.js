@@ -52,10 +52,29 @@ const sendAlert = async (callbackQuery, text) => {
     await bot.answerCallbackQuery(callbackQuery.id, text);
 }
 
+const pinDashboard = async (messageId) => {
+    await bot.pinChatMessage(groupId, messageId);
+}
+
+const sendDashboardMessage = async (text) => {
+    const message = await bot.sendMessage(groupId, text);
+    return message.message_id;
+}
+
+const editDashboardMessage = async (messageId, text) => {
+    await bot.editMessageText(text, {
+        chat_id: groupId,
+        message_id: messageId,
+        reply_markup: { inline_keyboard: [] }
+    });
+}
 
 module.exports = {
     sendNewPalletNotification,
     sendPalletUnblockedNotification,
     editPalletMessage,
-    sendAlert
+    sendAlert,
+    pinDashboard,
+    sendDashboardMessage,
+    editDashboardMessage
 }
