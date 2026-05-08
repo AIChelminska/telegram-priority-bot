@@ -70,7 +70,9 @@ const editDashboardMessage = async (messageId, text) => {
             reply_markup: { inline_keyboard: [] }
         });
     } catch (err) {
-        console.error('[telegram] editDashboardMessage error:', err.message);
+        if (!err.message.includes('message is not modified')) {
+            console.error('[telegram] editDashboardMessage error:', err.message);
+        }
     }
 }
 
