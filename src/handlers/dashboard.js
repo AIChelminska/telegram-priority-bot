@@ -17,7 +17,7 @@ const updateDashboard = async () => {
     const stacked = states.filter(s => s?.state === 'stacked').length;
     const unblockedToday = storage.getUnblockedToday();
     const pg = storage.getPG();
-    await editDashboardMessage(dashboardMessageId, `📊 DASHBOARD\n\n🚨 Active: ${pallets.length}\n✋ Claimed: ${claimed} / Unclaimed: ${unclaimed}\n⚠️ Stacked: ${stacked}\n✅ Unblocked today: ${unblockedToday}\n👑 PG: ${pg ? `@${pg.username}` : 'none'}`);
+    await editDashboardMessage(dashboardMessageId, `📊 DASHBOARD\n\n🚨 Active: ${pallets.length}\n✋ Claimed: ${claimed} / Unclaimed: ${unclaimed}\n⚠️ Stacked: ${stacked}\n✅ Unblocked today: ${unblockedToday}\n👑 PG: ${pg ? `@${pg.username || pg.first_name}` : 'none'}`)
 }
 
 module.exports = {
