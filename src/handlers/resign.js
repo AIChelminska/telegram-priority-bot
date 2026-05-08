@@ -3,7 +3,7 @@ const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleResign = async (callbackQuery) => {
     const palletKey = callbackQuery.data.replace('resign_', '');
-    const user = callbackQuery.from.username;
+    const user = callbackQuery.from.username || callbackQuery.from.first_name;
     const palletState = storage.getPalletState(palletKey);
     if(palletState?.claimer !== user) {
         await sendAlert(callbackQuery, 'You are not the claimant of this pallet');

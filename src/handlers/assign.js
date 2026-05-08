@@ -4,7 +4,7 @@ const { editPalletMessage, sendAlert } = require('../services/telegram');
 const handleAssign = async (callbackQuery) => {
     const palletKey = callbackQuery.data.replace('assign_', '');
     const pg = storage.getPG();
-    if (!pg || pg.username !== callbackQuery.from.username) {
+    if (!pg || (pg.username || pg.first_name) !== (callbackQuery.from.username || callbackQuery.from.first_name)) {
         await sendAlert(callbackQuery, 'You are not the Priority Guy');
         return;
     }

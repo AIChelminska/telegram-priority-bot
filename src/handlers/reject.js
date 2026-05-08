@@ -9,7 +9,7 @@ const handleReject = async (callbackQuery) => {
     const pallet = storage.getPalletByKey(palletKey);
     const pg = storage.getPG();
     storage.setPalletState(palletKey, 'unclaimed');
-    await editPalletMessage(palletKey, `❌ ${pallet.articleName} rejected\n@${pg.username} task available!`,
+    await editPalletMessage(palletKey, `❌ ${pallet.articleName} rejected\n@${pg.username || pg.first_name} task available!`,
         [[
             { text: '✋ Claim', callback_data: `claim_${palletKey}` },
             { text: '⚠️ Stack', callback_data: `stack_${palletKey}` },

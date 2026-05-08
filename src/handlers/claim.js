@@ -2,7 +2,7 @@ const storage = require('../services/storage');
 const { editPalletMessage } = require('../services/telegram');
 
 const handleClaim = async (callbackQuery) => {
-    const claimer = callbackQuery.from.username;
+    const claimer = callbackQuery.from.username || callbackQuery.from.first_name;
     const palletKey = callbackQuery.data.replace('claim_', '');
     storage.setPalletState(palletKey, 'claimed', claimer);
     const pallet = storage.getPalletByKey(palletKey);
