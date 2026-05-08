@@ -57,7 +57,13 @@ const pinDashboard = async (messageId) => {
 }
 
 const sendDashboardMessage = async (text) => {
-    const message = await bot.sendMessage(groupId, text);
+    const message = await bot.sendMessage(groupId, text, {
+        reply_markup: {
+            inline_keyboard: [[
+                { text: '👑 Become PG', callback_data: 'become_pg' }
+            ]]
+        }
+    });
     return message.message_id;
 }
 
@@ -67,7 +73,7 @@ const editDashboardMessage = async (messageId, text) => {
         await bot.editMessageText(text, {
             chat_id: groupId,
             message_id: messageId,
-            reply_markup: { inline_keyboard: [] }
+            reply_markup: { inline_keyboard: [[{ text: '👑 Become PG', callback_data: 'become_pg' }]] }
         });
     } catch (err) {
         if (!err.message.includes('message is not modified')) {
