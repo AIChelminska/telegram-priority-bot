@@ -7,64 +7,89 @@ const groupId = process.env.TELEGRAM_GROUP_ID;
 
 const sendNewPalletNotification = async (pallet) => {
     const msg = `🚨 NEW BLOCKED PALLET\n\n${pallet.articleName}\nZone: ${pallet.zone}\nLocated at: ${pallet.stock}`;
-    
-    const message = await bot.sendMessage(groupId, msg, {
-        reply_markup: {
-            inline_keyboard: [
-                [
-                    { text: '✋ Claim', callback_data: `claim_${pallet.key}` },
-                    { text: '⚠️ Stack', callback_data: `stack_${pallet.key}` },
-                    { text: '👑 Assign', callback_data: `assign_${pallet.key}` }
-                ]
-            ]
-        }
-    });
 
-    storage.saveMessageId(pallet.key, message.message_id);
+    try {
+        const message = await bot.sendMessage(groupId, msg, {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: '✋ Claim', callback_data: `claim_${pallet.key}` },
+                        { text: '⚠️ Stack', callback_data: `stack_${pallet.key}` },
+                        { text: '👑 Assign', callback_data: `assign_${pallet.key}` }
+                    ]
+                ]
+            }
+        });
+
+        storage.saveMessageId(pallet.key, message.message_id);
+    } catch (err) {
+        console.error('[telegram] sendNewPalletNotification error:', err.message);
+    }
 }
 
 const sendPalletUnblockedNotification = async (pallet) => {
     const messageId = storage.getMessageId(pallet.key);
     if (!messageId) return;
 
-    await bot.editMessageText(
-        `✅ PALLET UNBLOCKED\n\n${pallet.articleName}\nLocated at: ${pallet.stock}`,
-        {
-            chat_id: groupId,
-            message_id: messageId,
-            reply_markup: { inline_keyboard: [] }
-        }
-    );
+    try {
+        await bot.editMessageText(
+            `✅ PALLET UNBLOCKED\n\n${pallet.articleName}\nLocated at: ${pallet.stock}`,
+            {
+                chat_id: groupId,
+                message_id: messageId,
+                reply_markup: { inline_keyboard: [] }
+            }
+        );
+    } catch (err) {
+        console.error('[telegram] sendPalletUnblockedNotification error:', err.message);
+    }
 }
 
 const editPalletMessage = async (palletKey, text, buttons) => {
     const messageId = storage.getMessageId(palletKey);
     if (!messageId) return;
 
-    await bot.editMessageText(text, {
-        chat_id: groupId,
-        message_id: messageId,
-        reply_markup: { inline_keyboard: buttons }
-    });
+    try {
+        await bot.editMessageText(text, {
+            chat_id: groupId,
+            message_id: messageId,
+            reply_markup: { inline_keyboard: buttons }
+        });
+    } catch (err) {
+        console.error('[telegram] editPalletMessage error:', err.message);
+    }
 }
 
 const sendAlert = async (callbackQuery, text) => {
-    await bot.answerCallbackQuery(callbackQuery.id, text);
+    try {
+        await bot.answerCallbackQuery(callbackQuery.id, text);
+    } catch (err) {
+        console.error('[telegram] sendAlert error:', err.message);
+    }
 }
 
 const pinDashboard = async (messageId) => {
-    await bot.pinChatMessage(groupId, messageId);
+    try {
+        await bot.pinChatMessage(groupId, messageId);
+    } catch (err) {
+        console.error('[telegram] pinDashboard error:', err.message);
+    }
 }
 
 const sendDashboardMessage = async (text) => {
-    const message = await bot.sendMessage(groupId, text, {
-        reply_markup: {
-            inline_keyboard: [[
-                { text: '👑 Become PG', callback_data: 'become_pg' }
-            ]]
-        }
-    });
-    return message.message_id;
+    try {
+        const message = await bot.sendMessage(groupId, text, {
+            reply_markup: {
+                inline_keyboard: [[
+                    { text: '👑 Become PG', callback_data: 'become_pg' }
+                ]]
+            }
+        });
+        return message.message_id;
+    } catch (err) {
+        console.error('[telegram] sendDashboardMessage error:', err.message);
+        return null;
+    }
 }
 
 const editDashboardMessage = async (messageId, text) => {

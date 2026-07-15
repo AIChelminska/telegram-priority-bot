@@ -14,6 +14,13 @@ const becomePgHandler = require('./src/handlers/become-pg');
 const scheduler = require('./src/scheduler');
 const dashboard = require('./src/handlers/dashboard');
 
+process.on('unhandledRejection', (reason) => {
+    console.error('[process] Unhandled rejection:', reason?.message || reason);
+});
+process.on('uncaughtException', (err) => {
+    console.error('[process] Uncaught exception:', err.message);
+});
+
 const app = express();
 
 app.use(express.json());
