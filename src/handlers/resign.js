@@ -1,8 +1,8 @@
 const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
+const { updateDashboard } = require('./dashboard');
 
 const handleResign = async (callbackQuery) => {
-    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('resign_', '');
     const user = callbackQuery.from.username || callbackQuery.from.first_name;
     const palletState = storage.getPalletState(palletKey);
@@ -10,6 +10,7 @@ const handleResign = async (callbackQuery) => {
         await sendAlert(callbackQuery, 'You are not the claimant of this pallet');
         return;
     }
+    await sendAlert(callbackQuery, '');
     storage.setPalletState(palletKey, 'unclaimed');
     const pallet = storage.getPalletByKey(palletKey);
 
@@ -21,6 +22,7 @@ const handleResign = async (callbackQuery) => {
             { text: '👑 Assign', callback_data: `assign_${palletKey}` }
         ]]
     );
+    await updateDashboard();
 }
 
 module.exports = {

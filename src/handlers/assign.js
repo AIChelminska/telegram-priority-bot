@@ -2,13 +2,13 @@ const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
 
 const handleAssign = async (callbackQuery) => {
-    await sendAlert(callbackQuery, '');
     const palletKey = callbackQuery.data.replace('assign_', '');
     const pg = storage.getPG();
     if (!pg || (pg.username || pg.first_name) !== (callbackQuery.from.username || callbackQuery.from.first_name)) {
         await sendAlert(callbackQuery, 'You are not the Priority Guy');
         return;
     }
+    await sendAlert(callbackQuery, '');
     const groupMembers = process.env.GROUP_MEMBERS.split(',');
     const buttons = groupMembers.map(member => ([
         { 

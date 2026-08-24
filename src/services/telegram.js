@@ -62,7 +62,7 @@ const editPalletMessage = async (palletKey, text, buttons) => {
 
 const sendAlert = async (callbackQuery, text) => {
     try {
-        await bot.answerCallbackQuery(callbackQuery.id, text);
+        await bot.answerCallbackQuery(callbackQuery.id, { text, show_alert: Boolean(text) });
     } catch (err) {
         console.error('[telegram] sendAlert error:', err.message);
     }

@@ -1,5 +1,6 @@
 const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
+const { updateDashboard } = require('./dashboard');
 
 const handleReject = async (callbackQuery) => {
     await sendAlert(callbackQuery, '');
@@ -17,6 +18,7 @@ const handleReject = async (callbackQuery) => {
             { text: '👑 Assign', callback_data: `assign_${palletKey}` }
         ]]
     );
+    await updateDashboard();
 }
 
 module.exports = {

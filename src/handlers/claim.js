@@ -1,5 +1,6 @@
 const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
+const { updateDashboard } = require('./dashboard');
 
 const handleClaim = async (callbackQuery) => {
     await sendAlert(callbackQuery, '');
@@ -14,6 +15,7 @@ const handleClaim = async (callbackQuery) => {
             { text: '🔙 Resign', callback_data: `resign_${palletKey}` }
         ]
     ]);
+    await updateDashboard();
 }
 
 module.exports = {

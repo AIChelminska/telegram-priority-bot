@@ -3,6 +3,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const receiver = require('./src/services/receiver');
 const telegram = require('./src/services/telegram');
+const storage = require('./src/services/storage');
 const claimHandler = require('./src/handlers/claim');
 const resignHandler = require('./src/handlers/resign');
 const stackedHandler = require('./src/handlers/stacked');
@@ -25,9 +26,19 @@ const app = express();
 
 app.use(express.json());
 
-const onData = ({ newPallets, resolvedPallets }) => {
-    newPallets.forEach(pallet => telegram.sendNewPalletNotification(pallet));
-    resolvedPallets.forEach(pallet => telegram.sendPalletUnblockedNotification(pallet));
+const onData = async ({ newPallets, resolvedPallets }) => {
+    for (const pallet of newPallets) {
+        await telegram.sendNewPalletNotification(pallet);
+    }
+    for (const pallet of resolvedPallets) {
+        await telegram.sendPalletUnblockedNotification(pallet);
+        storage.incrementUnblockedToday();
+        storage.deletePalletState(pallet.key);
+        storage.deleteMessageId(pallet.key);
+    }
+    if (newPallets.length || resolvedPallets.length) {
+        await dashboard.updateDashboard();
+    }
 };
 
 app.use('/receive', receiver.createRouter(onData));

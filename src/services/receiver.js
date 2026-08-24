@@ -39,7 +39,10 @@ const createRouter = (onData) => {
         if (secret && req.headers['x-secret'] !== secret) {
             return res.status(401).json({ error: 'Unauthorized' });
         }
-        const rows = req.body.rows;
+        const rows = req.body?.rows;
+        if (!Array.isArray(rows)) {
+            return res.status(400).json({ error: 'Invalid payload: rows must be an array' });
+        }
         const { newPallets, resolvedPallets } = processData(rows);
 
         onData({ newPallets, resolvedPallets })

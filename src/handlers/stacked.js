@@ -1,5 +1,6 @@
 const storage = require('../services/storage');
 const { editPalletMessage, sendAlert } = require('../services/telegram');
+const { updateDashboard } = require('./dashboard');
 
 const handleStacked = async (callbackQuery) => {
     await sendAlert(callbackQuery, '');
@@ -12,6 +13,7 @@ const handleStacked = async (callbackQuery) => {
             { text: '🔓 Unstack', callback_data: `unstack_${palletKey}` }
         ]
     ]);
+    await updateDashboard();
 }
 
 module.exports = {
