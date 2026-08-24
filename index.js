@@ -44,9 +44,11 @@ const onData = async ({ newPallets, resolvedPallets }) => {
 app.use('/receive', receiver.createRouter(onData));
 
 app.post('/webhook', (req, res) => {
-    const { callback_query } = req.body;
+    const { callback_query, message } = req.body;
+    if (message?.from) storage.rememberUser(message.from);
     if (!callback_query) return res.sendStatus(200);
 
+    storage.rememberUser(callback_query.from);
     const data = callback_query.data;
 
     if (data.startsWith('claim_')) claimHandler.handleClaim(callback_query);

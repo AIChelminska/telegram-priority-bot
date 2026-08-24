@@ -8,6 +8,8 @@ let unblockedToday = 0;
 
 let pg = null;
 
+let groupMembers = new Map();
+
 const getKnownPallets = () => knownPallets;
 
 const setKnownPallets = (pallets) => knownPallets = pallets;
@@ -25,6 +27,14 @@ const setPalletState = (palletKey, state, claimer = null) => palletStates.set(pa
 const deletePalletState = (palletKey) => palletStates.delete(palletKey);
 
 const getPalletByKey = (palletKey) => knownPallets.find(pallet => pallet.key === palletKey);
+
+const rememberUser = (user) => {
+    if (!user) return;
+    if (user.username) groupMembers.set(user.username.toLowerCase(), user);
+    if (user.first_name) groupMembers.set(user.first_name.toLowerCase(), user);
+};
+
+const findUserByName = (name) => groupMembers.get(String(name).toLowerCase());
 
 const getPG = () => pg;
 
@@ -46,6 +56,8 @@ module.exports = {
   setPalletState,
   deletePalletState,
   getPalletByKey,
+  rememberUser,
+  findUserByName,
   getPG,
   setPG,
   getUnblockedToday,

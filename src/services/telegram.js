@@ -60,6 +60,22 @@ const editPalletMessage = async (palletKey, text, buttons) => {
     }
 }
 
+const sendAssignmentNotification = async (member, pallet) => {
+    const user = storage.findUserByName(member);
+    const mention = user
+        ? `[${member}](tg://user?id=${user.id})`
+        : `@${member}`;
+    try {
+        await bot.sendMessage(
+            groupId,
+            `🔔 ${mention} you have been assigned a pallet!\n\n${pallet.articleName}\nZone: ${pallet.zone}\nLocated at: ${pallet.stock}\n\nAccept or reject it in the message above ⬆️`,
+            { parse_mode: 'Markdown' }
+        );
+    } catch (err) {
+        console.error('[telegram] sendAssignmentNotification error:', err.message);
+    }
+}
+
 const sendAlert = async (callbackQuery, text) => {
     try {
         await bot.answerCallbackQuery(callbackQuery.id, { text, show_alert: Boolean(text) });
@@ -111,6 +127,7 @@ module.exports = {
     sendNewPalletNotification,
     sendPalletUnblockedNotification,
     editPalletMessage,
+    sendAssignmentNotification,
     sendAlert,
     pinDashboard,
     sendDashboardMessage,

@@ -1,5 +1,5 @@
 const storage = require('../services/storage');
-const { editPalletMessage, sendAlert } = require('../services/telegram');
+const { editPalletMessage, sendAlert, sendAssignmentNotification } = require('../services/telegram');
 
 const handleAssign = async (callbackQuery) => {
     const palletKey = callbackQuery.data.replace('assign_', '');
@@ -31,6 +31,7 @@ const handleAssignUser = async (callbackQuery) => {
             { text: '✅ Accept', callback_data: `accept_${member}_${palletKey}` },
             { text: '❌ Reject', callback_data: `reject_${member}_${palletKey}` }
         ]]);
+    await sendAssignmentNotification(member, pallet);
 }
 
 
