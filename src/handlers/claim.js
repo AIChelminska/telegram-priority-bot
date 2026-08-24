@@ -8,7 +8,7 @@ const handleClaim = async (callbackQuery) => {
     const palletKey = callbackQuery.data.replace('claim_', '');
     storage.setPalletState(palletKey, 'claimed', claimer);
     const pallet = storage.getPalletByKey(palletKey);
-    await editPalletMessage(palletKey, `✋ ${pallet.articleName} claimed by ${claimer}`, 
+    await editPalletMessage(palletKey, `✋ ${pallet.articleName} claimed by ${claimer}\n\nZone: ${pallet.zone}\nLocated at: ${pallet.stock}`, 
     [
         [
             { text: '⚠️ Stack', callback_data: `stack_${palletKey}` },

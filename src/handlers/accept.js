@@ -11,7 +11,7 @@ const handleAccept = async (callbackQuery) => {
     const pallet = storage.getPalletByKey(palletKey);
     const pg = storage.getPG();
     storage.setPalletState(palletKey, 'claimed', member);
-    await editPalletMessage(palletKey, `✅ ${pallet.articleName} accepted by @${member}\n@${pg.username || pg.first_name} task assigned!`, [
+    await editPalletMessage(palletKey, `✅ ${pallet.articleName} accepted by @${member}\n\nZone: ${pallet.zone}\nLocated at: ${pallet.stock}\n\n@${pg.username || pg.first_name} task assigned!`, [
         [
             { text: '⚠️ Stack', callback_data: `stack_${palletKey}` },
             { text: '🔙 Resign', callback_data: `resign_${palletKey}` }

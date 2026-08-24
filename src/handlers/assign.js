@@ -26,7 +26,7 @@ const handleAssignUser = async (callbackQuery) => {
     const member = rest.slice(0, separatorIndex);
     const palletKey = rest.slice(separatorIndex + 1);
     const pallet = storage.getPalletByKey(palletKey);
-    await editPalletMessage(palletKey, `👑 ${pallet.articleName} assigned to @${member}`, [
+    await editPalletMessage(palletKey, `👑 ${pallet.articleName} assigned to @${member}\n\nZone: ${pallet.zone}\nLocated at: ${pallet.stock}`, [
         [
             { text: '✅ Accept', callback_data: `accept_${member}_${palletKey}` },
             { text: '❌ Reject', callback_data: `reject_${member}_${palletKey}` }
