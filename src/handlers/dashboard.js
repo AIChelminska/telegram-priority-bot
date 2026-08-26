@@ -3,13 +3,7 @@ const { sendDashboardMessage, editDashboardMessage, pinDashboard } = require('..
 
 let dashboardMessageId = null;
 
-const initDashboard = async () => {
-    dashboardMessageId = await sendDashboardMessage(`📊 DASHBOARD\n\n🚨 Active: 0\n✋ Claimed: 0 / Unclaimed: 0\n⚠️ Stacked: 0\n✅ Unblocked today: 0\n👑 PG: none`);
-    await pinDashboard(dashboardMessageId);
-    return dashboardMessageId;
-}
-
-const updateDashboard = async () => {
+const buildDashboardText = () => {
     const pallets = storage.getKnownPallets();
     const states = pallets.map(p => storage.getPalletState(p.key));
     const claimed = states.filter(s => s?.state === 'claimed').length;
@@ -17,8 +11,18 @@ const updateDashboard = async () => {
     const stacked = states.filter(s => s?.state === 'stacked').length;
     const unblockedToday = storage.getUnblockedToday();
     const pg = storage.getPG();
-    await editDashboardMessage(dashboardMessageId, `📊 DASHBOARD\n\n🚨 Active: ${pallets.length}\n✋ Claimed: ${claimed} / Unclaimed: ${unclaimed}\n⚠️ Stacked: ${stacked}\n✅ Unblocked today: ${unblockedToday}\n👑 PG: ${pg ? `@${pg.username || pg.first_name}` : 'none'}`)
-}
+    return `📊 DASHBOARD\n\n🚨 Active: ${pallets.length}\n✋ Claimed: ${claimed} / Unclaimed: ${unclaimed}\n⚠️ Stacked: ${stacked}\n✅ Unblocked today: ${unblockedToday}\n👑 PG: ${pg ? `@${pg.username || pg.first_name}` : 'none'}`;
+};
+
+const initDashboard = async () => {
+    dashboardMessageId = await sendDashboardMessage(buildDashboardText());
+    await pinDashboard(dashboardMessageId);
+    return dashboardMessageId;
+};
+
+const updateDashboard = async () => {
+    await editDashboardMessage(dashboardMessageId, buildDashboardText());
+};
 
 module.exports = {
     initDashboard,

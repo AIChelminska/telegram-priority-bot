@@ -1,15 +1,17 @@
 const cron = require('node-cron');
-const { updateDashboard } = require('./handlers/dashboard');
+const { initDashboard, updateDashboard } = require('./handlers/dashboard');
 const storage = require('./services/storage');
 
-cron.schedule('0 1 * * *', async () => {
+const cronOptions = { timezone: 'Europe/Warsaw' };
+
+cron.schedule('0 4 * * *', async () => {
     try {
         storage.resetUnblockedToday();
-        await updateDashboard();
+        await initDashboard();
     } catch (err) {
-        console.error('[scheduler] daily reset error:', err.message);
+        console.error('[scheduler] daily dashboard error:', err.message);
     }
-});
+}, cronOptions);
 
 cron.schedule('* * * * *', async () => {
     try {
@@ -17,4 +19,4 @@ cron.schedule('* * * * *', async () => {
     } catch (err) {
         console.error('[scheduler] updateDashboard error:', err.message);
     }
-});
+}, cronOptions);
