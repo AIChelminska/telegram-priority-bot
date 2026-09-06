@@ -7,6 +7,7 @@ const cronOptions = { timezone: 'Europe/Warsaw' };
 cron.schedule('0 4 * * *', async () => {
     try {
         storage.resetUnblockedToday();
+        storage.setPG(null);
         await initDashboard();
     } catch (err) {
         console.error('[scheduler] daily dashboard error:', err.message);
